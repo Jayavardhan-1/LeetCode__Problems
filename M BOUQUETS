@@ -1,0 +1,33 @@
+class Solution {
+    public int minDays(int[] bloomDay, int m, int k) {
+        if((long) m*k>bloomDay.length){
+            return -1;
+        }
+        int low=1,high=(int) 1e9;
+        while(low<high){
+            int mid=low+(high-low)/2;
+            if(minimum(bloomDay,m,k,mid))
+                high=mid;
+            else
+                low=mid+1;
+        };
+        return low;
+    }
+    public boolean minimum(int[] bloomDay,int m,int k,int P){
+        int R=0;
+        for(int i=0;i<bloomDay.length;i++){
+            int C=0;
+            while(i<bloomDay.length && C<k && bloomDay[i]<=P){
+                C++;
+                i++;
+            }
+            if(C==k){
+                R++;
+                i--;
+            }
+            if(R>=m)
+                return true;
+        }
+        return false;
+    }
+}
