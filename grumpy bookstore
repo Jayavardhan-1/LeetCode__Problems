@@ -1,0 +1,19 @@
+class Solution {
+    public int maxSatisfied(int[] customers, int[] grumpy, int minutes) {
+        int p=grumpy.length;
+        int k=0;
+        int U=0;
+        int V=0;
+        for(int j=0;j<p;j++){
+            U+=customers[j]*grumpy[j];
+            V=Math.max(U,V);
+            if(j>=minutes-1 )
+                U-=customers[k]*grumpy[k++];
+        }
+        int res=V;
+        for(int i=0;i<grumpy.length;i++){
+            res+=customers[i]*(1-grumpy[i]);
+        }
+        return res;
+    }
+}
