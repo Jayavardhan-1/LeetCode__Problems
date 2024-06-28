@@ -1,0 +1,23 @@
+class Solution {
+    public long maximumImportance(int n, int[][] roads) {
+        int[] A=new int[n];
+        for(int[] k:roads){
+            A[k[0]]++;
+            A[k[1]]++;
+        }
+        Integer[] C=new Integer[n];
+        for(int i=0;i<n;i++){
+            C[i]=i;
+        }
+        Arrays.sort(C,new Comparator<Integer>(){
+            public int compare(Integer a,Integer b){
+                return Integer.compare(A[b],A[a]);
+            }
+        });
+        long L=0;
+        for(int i=0;i<n;i++){
+            L+=(long)(n-i)*A[C[i]];
+        }
+        return L;
+    }
+}
