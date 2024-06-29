@@ -1,0 +1,31 @@
+class Solution {
+    public List<List<Integer>> getAncestors(int n, int[][] edges) {
+        List<List<Integer>> L=new ArrayList<>();
+        for(int i=0;i<n;i++){
+            L.add(new ArrayList<>());
+        }
+        ArrayList<Integer>[] T=new ArrayList[n];
+        for(int i=0;i<n;i++){
+            T[i]=new ArrayList<>();
+        }
+        for (int[] P:edges){
+            T[P[0]].add(P[1]);
+        }
+        for(int i=0;i<n;i++){
+            ances(T,i,i,L,new boolean[n]);
+        }
+        for(int i=0;i<n;i++){
+            L.get(i).sort(Integer::compareTo);
+        }
+        return L;
+    }
+    public void ances(ArrayList<Integer>[] T,int R,int C,List<List<Integer>> L,boolean[] V){
+        V[C]=true;
+        for(int r:T[C]){
+            if(!V[r]){
+                L.get(r).add(R);
+                ances(T,R,r,L,V);
+            }
+        }
+    }
+}
