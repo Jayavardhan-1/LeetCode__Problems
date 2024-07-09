@@ -1,0 +1,16 @@
+class Solution {
+    public double averageWaitingTime(int[][] customers) {
+        int N=customers.length;
+        double A=customers[0][1];
+        int B=customers[0][0]+customers[0][1];
+        for(int i=1;i<N;i++){
+            int[] C=customers[i];
+            int D=C[0];
+            int S=Math.max(D,B);
+            int T=S+C[1];
+            B=T;
+            A+=T-D;
+        }
+        return A/N;
+    }
+}
