@@ -1,0 +1,34 @@
+class Solution {
+    public int maximumGain(String s, int x, int y) {
+        int e=0;
+        int f=0;
+        int g=Math.min(x,y);
+        int h=0;
+        for(int i=0;i<s.length();i++){
+            char c=s.charAt(i);
+            if(c>'b'){
+                h+=Math.min(e,f)*g;
+                e=0;
+                f=0;
+            } 
+            else if(c=='a'){
+                if(x<y && f>0){
+                    f--;
+                    h+=y;
+                } 
+                else
+                    e++;
+            } 
+            else{
+                if(x>y && e>0){
+                    e--;
+                    h+=x;
+                } 
+                else
+                    f++;
+            }
+        }
+        h+=Math.min(e,f)*g;
+        return h;
+    }
+}
