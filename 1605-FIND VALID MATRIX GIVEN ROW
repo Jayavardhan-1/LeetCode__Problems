@@ -1,0 +1,20 @@
+class Solution {
+    public int[][] restoreMatrix(int[] rowSum, int[] colSum) {
+        int u=rowSum.length;
+        int v=colSum.length;
+        int[][] p=new int[u][v];
+        int i=0;
+        int j=0;
+        while(i<u && j<v){
+            int y=Math.min(rowSum[i],colSum[j]);
+            p[i][j]=y;
+            rowSum[i]-=y;
+            colSum[j]-=y;
+            if(rowSum[i]==0)
+                i++;
+            if(colSum[j]==0)
+                j++;
+        }
+        return p;
+    }
+}
