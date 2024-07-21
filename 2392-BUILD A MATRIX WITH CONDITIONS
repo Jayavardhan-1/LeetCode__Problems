@@ -1,0 +1,61 @@
+class Solution {
+    public int[][] buildMatrix(int k, int[][] rowConditions, int[][] colConditions) {
+      List<Integer>[] x=new ArrayList[k+1]; 
+        for(int i=1;i<x.length;i++){
+            x[i]=new ArrayList();
+        }
+        for(int[] p:rowConditions){ 
+            x[p[0]].add(p[1]); 
+        }
+        List<Integer>[] e=new ArrayList[k+1]; 
+        for(int i=1;i<e.length;i++){
+            e[i]=new ArrayList();
+        }
+        for(int [] z:colConditions){
+            e[z[0]].add(z[1]); 
+        }
+        int[] v=new int[k+1];
+        Deque<Integer> q=new LinkedList<>(); 
+        for(int i=1;i<x.length;i++){ 
+            if(!build(x,i,v,q))
+                return new int[0][0];
+        }
+        int[] m=new int[k+1]; 
+        for(int i=0;i<k;i++){ 
+            int node=q.pollLast(); 
+            m[node]=i;
+        }
+        v=new int[k+1];
+        q=new LinkedList();
+        for(int i=1;i<e.length;i++){
+            if(!build(e,i,v,q))
+                return new int[0][0];
+        }
+        int[] s=new int[k];
+        int[] t=new int[k+1];
+        for(int i=0;i<k;i++){
+            int node=q.pollLast();
+            s[i]=node;
+            t[node]=i;
+        }
+        int[][] o=new int[k][k];
+        for(int i=1;i<=k;i++){
+            o[m[i]][t[i]]=i;
+        }
+        return o;
+    }
+    public boolean build(List<Integer>[] u, int node, int[] v, Deque<Integer> q){
+        if(v[node]==2)
+            return false;
+        if(v[node]==0){
+            v[node]=2;
+            for(int i:u[node]){
+                if(!build(u,i,v,q))
+                    return false;
+            }
+            v[node]=1;
+            q.add(node);
+        }
+        return true;
+    }   
+}
