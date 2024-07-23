@@ -1,0 +1,20 @@
+class Solution {
+    public int[] frequencySort(int[] nums) {
+        Map<Integer, Integer> M=new HashMap<>();
+        Integer[] H=new Integer[nums.length];
+        for(int i=0;i<nums.length;i++){
+            M.put(nums[i],M.getOrDefault(nums[i],0)+1);
+            H[i]=nums[i];
+        }
+        Arrays.sort(H,(n1,n2)->{
+            if(M.get(n1)!=M.get(n2))
+                return M.get(n1)-M.get(n2); 
+            else
+                return n2-n1;
+        });
+        for(int i=0;i<nums.length;i++){
+            nums[i]=H[i];
+        }
+        return nums;
+    }
+}
