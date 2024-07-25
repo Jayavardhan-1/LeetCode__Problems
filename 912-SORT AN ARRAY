@@ -1,0 +1,15 @@
+class Solution {
+    public int[] sortArray(int[] nums) {
+        var v=new int[100001];
+        for(var k:nums){
+           v[k+50000]++;
+        }
+        var k=0;
+        for(var i=0;i<100001;i++){
+           for(var j=0;j<v[i];j++){
+               nums[k++]=i-50000;
+            }
+        }
+      return nums;
+    }
+}
