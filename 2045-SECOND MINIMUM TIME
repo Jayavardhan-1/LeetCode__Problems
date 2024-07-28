@@ -1,0 +1,34 @@
+class Solution {
+    public int secondMinimum(int n, int[][] edges, int time, int change) {
+        Map<Integer, List<Integer>> M=new HashMap();
+        for(int[] L:edges){
+            int u=L[0];
+            int v=L[1];
+            M.computeIfAbsent(u,x -> new ArrayList()).add(v);
+            M.computeIfAbsent(v,x -> new ArrayList()).add(u);
+        }
+        PriorityQueue<int[]> Q=new PriorityQueue<>((a,b)->a[1]-b[1]);
+        Q.offer(new int[]{1,0});
+        int[] V=new int[n+1]; 
+        int[] S=new int[n+1];
+        Arrays.fill(S,-1);
+        while(!Q.isEmpty()){
+            int Z=Q.size();
+            int[] U=Q.poll();
+            int Y=U[0];
+            int t=U[1];  
+            if(S[Y]==t || V[Y]>=2) 
+                     continue; 
+            V[Y]++; 
+            S[Y]=t;
+            if(Y==n && V[Y]==2) 
+                   return S[Y];
+            if((t/change)%2!=0) 
+                  t=(t/change+1)*change;
+            for(int W:M.getOrDefault(Y,new ArrayList<>())){
+                Q.offer(new int[]{W,t+time});
+            }
+        }
+        return -1;
+    }
+}
