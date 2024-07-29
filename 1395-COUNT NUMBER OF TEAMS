@@ -1,0 +1,45 @@
+class Solution {
+    public int numTeams(int[] rating) {
+        int n=rating.length;
+        if(n<3)
+           return 0;
+        int V=Integer.MAX_VALUE;
+        int U=Integer.MIN_VALUE;
+        for(int P:rating){
+            V=Math.min(V,P);
+            U=Math.max(U,P);
+        }
+        int[] L=new int[U-V+2];
+        int[] R=new int[U-V+2];
+        for(int num:rating){
+            TEAM(R,num-V,1);
+        }
+        int C=0;
+        for(int i=0;i<n;i++){
+            TEAM(R,rating[i]-V,-1);
+            int A=COUNT(L,rating[i]-V-1);
+            int E=i-A;
+            int B=COUNT(R,rating[i]-V-1);
+            int F=(n-i-1)-B;
+            C+=A*F+E*B;
+            TEAM(L,rating[i]-V,1);
+        } 
+        return C;
+    }
+    public void TEAM(int[] T,int D,int V){
+        D++;
+        while(D<T.length){
+            T[D]+=V;
+            D+=D & (-D);
+        }
+    }
+    public int COUNT(int[] T,int D){
+        int S=0;
+        D++;
+        while(D>0){
+            S+=T[D];
+            D-=D & (-D);
+        }
+        return S;
+    }
+}
