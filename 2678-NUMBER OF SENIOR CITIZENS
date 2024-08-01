@@ -1,0 +1,11 @@
+class Solution {
+    public int countSeniors(String[] details) {
+       int cou=0;
+       for(var ch:details){
+        int h=Integer.parseInt(ch.substring(11,13));
+        if(h>60)
+          cou++;
+       } 
+       return cou;
+    }
+}
