@@ -1,0 +1,16 @@
+class Solution {
+    public int minSwaps(int[] nums) {
+        int h=Arrays.stream(nums).sum();
+        int n=nums.length;
+        int cou=0;
+        for(int i=0;i<h;i++){
+            cou+=nums[i];
+        }
+        int a=cou;
+        for(int i=h;i<n+h;i++){
+            cou+=nums[i%n]-nums[(i-h+n)%n];
+            a=Math.max(a,cou);
+        }
+        return h-a; 
+    }
+}
