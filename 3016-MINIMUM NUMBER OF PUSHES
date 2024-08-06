@@ -1,0 +1,20 @@
+class Solution {
+    public int minimumPushes(String word) {
+        int[] F=new int[26];
+        for(char C:word.toCharArray()){
+            F[C-'a']++;
+        }
+        Integer[] E=new Integer[26];
+        for(int i=0;i<26;i++){
+            E[i]=F[i];
+        }
+        Arrays.sort(E, Collections.reverseOrder());
+        int H=0;
+        for(int i=0;i<26;i++){
+            if(E[i]==0)
+                break;
+            H+=(i/8+1)*E[i];
+        }
+        return H;
+    }
+}
