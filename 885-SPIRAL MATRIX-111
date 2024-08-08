@@ -1,0 +1,40 @@
+class Solution {
+    public int[][] spiralMatrixIII(int rows, int cols, int rStart, int cStart) {
+        int[][] B={{0,1},{1,0},{0,-1},{-1,0}};
+        int P=1;
+        int T=rows*cols;
+        List<int[]> D=new ArrayList<>();
+        int r=rStart;
+        int c=cStart;
+        int d=0;
+        while(D.size()<T){
+            for(int i=0;i<2;i++){
+                for(int j=0;j<P;j++){
+                    if(0<=r && r<rows && 0<=c && c<cols)
+                        D.add(new int[]{r,c});
+                    if(D.size()==T)
+                        return matrix(D);
+                    r+=B[d][0];
+                    c+=B[d][1];
+                }
+                d=(d+1)%4;
+            }
+            P++;
+        }
+        return matrix(D);
+    }
+    public int[][] matrix(List<int[]> L) {
+        int[][] A=new int[L.size()][2];
+        for(int i=0;i<L.size();i++){
+            A[i]=L.get(i);
+        }
+        return A;
+    }
+    public static void main(String[] args) {
+        Solution S=new Solution();
+        int[][] H=S.spiralMatrixIII(5,6,1,4);
+        for(int[] r:H){
+            System.out.println(Arrays.toString(r));
+        }
+    }
+}
