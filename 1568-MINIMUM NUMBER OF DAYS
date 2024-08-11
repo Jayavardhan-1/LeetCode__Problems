@@ -1,0 +1,59 @@
+class Solution {
+    int T;
+    int[][] v;
+    int[][] l;
+    int[] d=new int[]{0,1,0,-1,0};
+    boolean b;
+    public int minDays(int[][] grid) {
+        int n=grid.length;
+        int m=grid[0].length;
+        b=false;
+        v=new int[n][m];
+        l=new int[n][m];
+        T=1;
+        boolean B=false;
+        boolean A=false;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]==1){
+                    if(A)
+                        return 0;
+                    A=true;
+                    ISLAND(i,j,grid,-100,-100);
+                }
+            }
+        }
+        if(T==1)
+            return 0;
+        if(T==2)
+            return 1;
+        if(b)
+            return 1;
+        else
+            return 2;
+    }
+    public void ISLAND(int row, int col, int[][] grid, int u, int h){
+        grid[row][col]=0;
+        v[row][col]=T;
+        l[row][col]=T;
+        T++;
+        int c=0;
+        for(int i=0;i<4;i++){
+            int x=d[i]+row;
+            int y=d[i+1]+col;
+            if(x<0 || y<0 || x>=grid.length || y>=grid[0].length || (x==u && y==h) || (v[x][y]==0 && grid[x][y]==0))
+                continue;
+            if(v[x][y]==0){
+                c++;
+                ISLAND(x,y,grid,row,col);
+                l[row][col]=Math.min(l[row][col],l[x][y]);
+                if(l[x][y]>=v[row][col] && (u!=-100 && h!=-100))
+                    b=true;
+            }
+            else
+                l[row][col]=Math.min(l[row][col],l[x][y]);
+        }
+        if(u==-100 && h==-100 && c>1)
+            b=true;
+    }
+}
