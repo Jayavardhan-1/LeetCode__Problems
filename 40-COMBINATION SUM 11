@@ -1,0 +1,23 @@
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> L=new ArrayList<>();
+        Arrays.sort(candidates);
+        Com(0,candidates,target,L,new ArrayList<>());
+        return L;
+    }
+    public static void Com(int H,int[] R,int target,List<List<Integer>>L,List<Integer>O){
+        if(target==0){
+            L.add(new ArrayList<>(O));
+            return;
+        }
+        for(int i=H;i<R.length;i++){
+            if(i>H && R[i]==R[i-1]) 
+                continue;
+            if(R[i]>target)
+                 break;
+            O.add(R[i]);
+            Com(i+1,R,target-R[i],L,O);
+            O.remove(O.size()-1);
+        } 
+    }
+}
