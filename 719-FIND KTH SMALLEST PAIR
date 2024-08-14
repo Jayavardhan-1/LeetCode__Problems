@@ -1,0 +1,27 @@
+class Solution {
+    public int smallestDistancePair(int[] nums, int k) {
+        Arrays.sort(nums);
+        int a=0;
+        int b=nums[nums.length-1]-nums[0];
+        while(a<b){
+            int c=a+(b-a)/2;
+            int h=dist(nums,c);
+            if(h<k)
+                a=c+1;
+            else
+                b=c;
+        }
+        return a;
+    }
+    public int dist(int[] numbers,int t){
+        int count=0;
+        int left=0;
+        for(int right=1;right<numbers.length; right++){
+            while(numbers[right]-numbers[left]>t){
+                left++;
+            }
+            count+=right-left;
+        }
+        return count;
+    }
+}
