@@ -1,0 +1,14 @@
+class Solution {
+    public int maxDistance(List<List<Integer>> arrays) {
+        int u=arrays.get(0).get(0);
+        int v=arrays.get(0).get(arrays.get(0).size() - 1);
+        int w=0;
+        for(int i=1;i<arrays.size();i++){
+            List<Integer> h=arrays.get(i);
+            w=Math.max(w,Math.max(Math.abs(h.get(h.size()-1)-u),Math.abs(v-h.get(0))));
+            u=Math.min(u,h.get(0));
+            v=Math.max(v,h.get(h.size()-1));
+        }
+        return w;
+    }
+}
