@@ -1,0 +1,23 @@
+class Solution {
+    public int stoneGameII(int[] piles) {
+        int n=piles.length;
+        int[][] H=new int[n][n+1];
+        int[] X=new int[n];
+        X[n-1]=piles[n-1];
+        for(int i=n-2;i>=0;i--){
+            X[i]=X[i+1]+piles[i];
+        }
+        for(int i=n-1;i>=0;i--){
+            for(int m=1;m<=n;m++){
+                if(i+2*m>=n)
+                    H[i][m]=X[i];
+                 else{
+                    for(int k=1;k<=2*m;k++){
+                        H[i][m]=Math.max(H[i][m],X[i]-H[i+k][Math.max(m,k)]);
+                    }
+                }
+            }
+        }
+        return H[0][1];
+    }
+}
