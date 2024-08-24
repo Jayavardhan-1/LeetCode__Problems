@@ -1,0 +1,39 @@
+class Solution {
+    public String nearestPalindromic(String n) {
+        long u=Long.parseLong(n);
+        if(u<=10) 
+           return String.valueOf(u-1);
+        if(u==11) 
+           return "9";
+        int g=n.length();
+        long h=Long.parseLong(n.substring(0,(g+1)/2));
+        long[] c=new long[5];
+        c[0]=palin(h-1,g%2==0);
+        c[1]=palin(h,g%2==0);
+        c[2]=palin(h+1,g%2==0);
+        c[3]=(long)Math.pow(10,g-1)-1;
+        c[4]=(long)Math.pow(10,g)+1;
+        long a=0;
+        long d=Long.MAX_VALUE;
+        for(long o:c){
+            if(o==u) 
+              continue;
+            long e=Math.abs(o-u);
+            if(e<d || (e==d && o<a)){
+                d=e;
+                a=o;
+            }
+        }
+        return String.valueOf(a);
+    }
+    public long palin(long h,boolean b){
+        long t=h;
+        if(!b)
+            h/=10;
+        while(h>0) {
+            t=t*10+h%10;
+            h/=10;
+        }
+        return t;
+    }
+}
